@@ -6,7 +6,7 @@ import { connectDB } from "./db";
 import User from "./model";
 import bcrypt from "bcryptjs";
 
-export const {handler, SignIn, SignOut,auth} = NextAuth({
+export const authOptions = {
     providers:[
         // CredentialsProvider({
         //     name:"Credentials",
@@ -34,7 +34,7 @@ export const {handler, SignIn, SignOut,auth} = NextAuth({
         CredentialsProvider({
             name: "Credentials",
             credentials:{
-                name: { label: "Name", type: "text" },
+                
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" }
             },
@@ -50,7 +50,7 @@ export const {handler, SignIn, SignOut,auth} = NextAuth({
                 }
                 return {
                     id: user.id,
-                    name: user.name,
+                   
                     email: user.email,
                 };
             }
@@ -59,16 +59,16 @@ export const {handler, SignIn, SignOut,auth} = NextAuth({
     session: {strategy: "jwt"},
     pages:{signIn: "/signin"},
     callbacks: {
-        async jwt({token,user}){
+        async jwt({token,user}:{ token: any, user: any }){
             if(user){
                 token.user = user
             }
-            return token
+            return token    
         },
-        async session ({session,token}){
+        async session ({session, token}: { session: any, token: any } ){
             session.user = token.user as typeof session.user;
             return session;
         }
     },
     secret: process.env.NEXTAUTH_SECRET,
-})
+}

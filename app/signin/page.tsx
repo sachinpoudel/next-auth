@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -9,10 +10,10 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("credentials", {
+    await signIn("Credentials", {
       email,
       password,
-      callbackUrl: "/",
+      callbackUrl: "/dashboard",
       redirect: true,
     });
   };
@@ -38,9 +39,9 @@ export default function SignInPage() {
         <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
           Sign In
         </button>
-        <button onClick={() => signIn("google")}>Sign in with Google</button>
 
       </form>
+        <button className="px-4 py-2 text-white " onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button>
     </div>
   );
 }
