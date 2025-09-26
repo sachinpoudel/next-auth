@@ -2,19 +2,22 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect, useSearchParams } from "next/navigation";
+
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("Credentials", {
+    await signIn("credentials", {
       email,
       password,
-      callbackUrl: "/dashboard",
-      redirect: true,
+      callbackUrl,
     });
   };
 
@@ -41,7 +44,7 @@ export default function SignInPage() {
         </button>
 
       </form>
-        <button className="px-4 py-2 text-white " onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button>
+        <button className="px-4 py-2 text-white bg-blue-500 rounded mt-5" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button>
     </div>
   );
 }
