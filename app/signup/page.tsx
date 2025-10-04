@@ -12,7 +12,7 @@ const [email, setEmail] = useState("");
     const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Handle form submission
-        const res = await fetch("/api/signup", {   
+        const res = await fetch("/api/register", {   
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
