@@ -24,7 +24,10 @@ const [email, setEmail] = useState("");
         // You might want to redirect or show a success message here
         // For example: redirect to dashboard
         // redirect("/dashboard");  
+        if (res.ok) {
         router.push("/dashboard");
+        }else{
+          console.log("error")
         }
     
     
@@ -53,4 +56,4 @@ const [email, setEmail] = useState("");
           </form>
         </div>
       );
-}
+}}
